@@ -19,11 +19,12 @@ const useChat = (roomId: string, userName: string) => {
   const [codeError, setCodeError] = useState(false);
   const [creatorRoom] = useState(localStorage.getItem('creatorRoom') === "true" ? true : false);
   const socketRef = useRef({} as SocketIOClient.Socket);
-
+console.log("salut")
 
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: { roomId, userName, creatorRoom }
+      query: { roomId, userName, creatorRoom },
+      transports: ["xhr-polling"]
     });
     
     socketRef.current.on(CODE_DONT_EXIST, () =>
