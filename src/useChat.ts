@@ -7,7 +7,7 @@ const END_GAME = "endGame";
 const CODE_DONT_EXIST = "codeDontExist";
 const GOOD_GUESS = "goodGuess";
 const NEW_TRACK = "newTrack";
-const SOCKET_SERVER_URL = "https://berriblindback.herokuapp.com";
+const SOCKET_SERVER_URL = "https://berriblindback.herokuapp.com/";
 
 const useChat = (roomId: string, userName: string) => {
   const [messages, setMessages] = useState<any[]>([]);
@@ -19,11 +19,11 @@ const useChat = (roomId: string, userName: string) => {
   const [codeError, setCodeError] = useState(false);
   const [creatorRoom] = useState(localStorage.getItem('creatorRoom') === "true" ? true : false);
   const socketRef = useRef({} as SocketIOClient.Socket);
-console.log("salut")
 
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
       query: { roomId, userName, creatorRoom },
+      transports: ["websocket"]
     });
     
     socketRef.current.on(CODE_DONT_EXIST, () =>
