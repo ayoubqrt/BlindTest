@@ -7,7 +7,7 @@ const END_GAME = "endGame";
 const CODE_DONT_EXIST = "codeDontExist";
 const GOOD_GUESS = "goodGuess";
 const NEW_TRACK = "newTrack";
-const SOCKET_SERVER_URL = "https://berriblindback.herokuapp.com:4000";
+const SOCKET_SERVER_URL = "https://berriblindback.herokuapp.com";
 
 const useChat = (roomId: string, userName: string) => {
   const [messages, setMessages] = useState<any[]>([]);
@@ -24,7 +24,6 @@ console.log("salut")
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
       query: { roomId, userName, creatorRoom },
-      transports: ["xhr-polling"]
     });
     
     socketRef.current.on(CODE_DONT_EXIST, () =>
