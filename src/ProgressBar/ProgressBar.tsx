@@ -13,9 +13,9 @@ const ProgressBar = (props: any) => {
           if (oldProgress === 100) {
             return 0;
           }
-          return oldProgress + 3.333;
+          return oldProgress + ((100 / 30) / 4);
         });
-      }, 1000);
+      }, 250);
     } 
     return () => {
       clearInterval(props.timer.current);

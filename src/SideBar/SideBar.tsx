@@ -147,11 +147,11 @@ const SideBar = (props: any) => {
           paper: classes.drawerPaper,
         }}
         anchor="right">
-        <Box style={{marginTop: 0, background: "#404040"}}>
-          <IconButton onClick={openChat} className={classes.tabIcons} style={chatIsOpened ? {color:"white", background: "#505050"} : {color:"#707371"}}>
+        <Box style={{ height: "64px", marginTop: 0, background: "#404040"}}>
+          <IconButton onClick={openChat} className={classes.tabIcons} style={chatIsOpened ? {color:"white", background: "#505050", height: "100%"} : {color:"#707371", height: "100%"}}>
             <TextsmsIcon />
           </IconButton>
-          <IconButton onClick={openOnlineUsers} className={classes.tabIcons} style={usersConnectedIsOpened ? {color:"#34eb64", background: "#505050"} : {color:"#62cc90"}}>
+          <IconButton onClick={openOnlineUsers} className={classes.tabIcons} style={usersConnectedIsOpened ? {color:"#34eb64", background: "#505050", height: "100%"} : {color:"#62cc90", height: "100%"}}>
             <PeopleIcon />
           </IconButton>
         </Box>

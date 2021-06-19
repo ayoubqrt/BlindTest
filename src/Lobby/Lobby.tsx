@@ -13,8 +13,16 @@ import Results from "../Results/Results";
 
 const Lobby = (props: any) => {
   const userName = String(localStorage.getItem('userName'));
-  const [isCreatorRoom, setIsCreatorRoom] = useState(String(localStorage.getItem('creatorRoom')));
   const { roomId } = props.match.params;
+
+  let isCreatorOfTheRoom = true;
+
+  if (!String(localStorage.getItem('creatorRoom')).includes(roomId) || !String(localStorage.getItem('creatorRoom')).includes("true"))
+  {
+    isCreatorOfTheRoom = false;
+    localStorage.setItem('creatorRoom', `${roomId}: false`);
+  }
+  const [isCreatorRoom] = useState(isCreatorOfTheRoom);
 
   if(!userName || userName === "null")
   {
@@ -30,14 +38,9 @@ const Lobby = (props: any) => {
   const [artistIsGuessed, setArtistIsGuessed] = useState(false);
   const [titleIsGuessed, setTitleIsGuessed] = useState(false);
   const [allTracks, setAllTracks] = useState([]);
-  const { users, gameIsFinished, messages, guesses, codeError, track, newTrack, sendMessage, sendGuess, launchParty } = useChat(roomId, userName);
+  const { users, gameIsFinished, messages, guesses, codeError, track, newTrack, setGameIsFinish, sendMessage, sendGuess, launchParty } = useChat(roomId, userName);
   const timer = React.useRef<any>();
   let audioPlayer = new Audio();
-
-  useEffect(() =>
-  {
-    localStorage.setItem('creatorRoom', "false");
-  }, [gameIsStarted] );
 
   if(codeError)
   {
@@ -57,7 +60,6 @@ const Lobby = (props: any) => {
     setGameIsStarted(true);
     launchParty();
     sendGuess(artistIsGuessed, titleIsGuessed, points);
-    // setTimeout(launchParty, 2000);
   }
 
   const checkGuess = (event: any) => {
@@ -81,6 +83,11 @@ const Lobby = (props: any) => {
 
     setPoints(newPoints);
     setGuess("");
+  }
+
+  const resetGame = () => {
+    setGameIsStarted(false)
+    setGameIsFinish(false)
   }
 
   useEffect(() => {
@@ -114,7 +121,6 @@ const Lobby = (props: any) => {
   return (
     <>
       <audio ref={(ref:any) => audioPlayer = ref} />
-      <SideBar roomId={roomId} users={users} messages={messages} sendMessage={sendMessage}/>
       <Grid style={{width: "250px", margin: "5px"}} container spacing={2}>
         <Grid item>
           {
@@ -126,12 +132,12 @@ const Lobby = (props: any) => {
         </Grid>
       </Grid>
 
-      <div style={{marginRight: 280, marginTop: 200}}>
+      <div style={{width: "calc(100% - 280px)", marginTop: 200}}>
         {!gameIsFinished ? 
           <> {
             !gameIsStarted ? 
             <Box style={{padding: 10, position: "fixed", bottom: 0, width: "100%", textAlign: "center", marginBottom: 40}}>
-              <Button disabled={isCreatorRoom == "false" || isCreatorRoom == "null"} onClick={startGame} variant="contained" color="primary" size="large" style={{background: "#3dbd31", fontWeight: "bold", marginRight: 280}}> Lancer la partie </Button>
+              <Button disabled={!isCreatorRoom || String(isCreatorRoom) == "null"} onClick={startGame} variant="contained" color="primary" size="large" style={{background: "#3dbd31", fontWeight: "bold", marginRight: 280}}> Lancer la partie </Button>
             </Box>
             :
             <Grid 
@@ -149,8 +155,7 @@ const Lobby = (props: any) => {
                   titleIsGuessed ? <Album style={titleIsGuessed ? {color:"green"}: {color:"black"}}/>: null
                 }
               </div>
-              <Grid container
-                    direction="row" style={{marginTop: 40, marginLeft: 100}}>
+              <div style={{display:"flex", margin: "50px", justifyContent: "space-between"}}>
                 <Box>
                   <Typography variant="h6" style={{color: "black"}}>
                     Scores 
@@ -159,7 +164,7 @@ const Lobby = (props: any) => {
                 </Box>
                 {
                   allTracks.length > 1 ? 
-                  <div  style={{marginLeft: "100px"}}>
+                  <div style={{marginLeft: "100px"}}>
                     <Typography variant="h6" style={{color: "black"}}>
                       Tu viens d'écouter 
                     </Typography>
@@ -168,12 +173,14 @@ const Lobby = (props: any) => {
                   </div>
                   : null
                 }
-            </Grid>
+            </div>
           </Grid>
           } </>
-        : <Results guesses={guesses} />
+        : <Results resetGame={resetGame} guesses={guesses} />
         }
       </div>
+
+      <SideBar roomId={roomId} users={users} messages={messages} sendMessage={sendMessage}/>
     </>
   );
 };

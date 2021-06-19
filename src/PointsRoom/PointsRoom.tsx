@@ -64,7 +64,7 @@ const PointsRoom = (props: any) => {
   // console.log(props);
   const player = props.playerPoints;
   return (
-      <div className={classes.details} style={{margin: 10}}>
+      <div className={classes.details} style={{margin: 20}}>
         {/* <CardContent className={classes.content}> */}
           <Typography component="h5" variant="h5">
             {props.playerPoints.senderUserName}
@@ -72,8 +72,8 @@ const PointsRoom = (props: any) => {
           <Typography variant="subtitle1">
             {props.playerPoints.points} pts
             <div style={{float: "right"}}>
-              <Mic style={player.artist ? {color:"red"}: {color:"#707371"}}/>
-              <Album style={player.title ? {color:"green"}: {color:"#707371"}}/>
+              <Mic style={player.artist ? {color:"red", marginRight: "5px"}: {color:"#707371", marginRight: "5px"}}/>
+              <Album style={player.title ? {color:"green", marginRight: "5px"}: {color:"#707371", marginRight: "5px"}}/>
             </div>
           </Typography>
         {/* </CardContent> */}

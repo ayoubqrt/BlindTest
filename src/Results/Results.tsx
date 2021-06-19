@@ -13,13 +13,16 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    width: "350px",
+    height: "200px",
+    textAlign: "center"
   },
 }));
 
@@ -34,15 +37,15 @@ const Results = (props:any) => {
   if(props.guesses.length > 3)
   {
     podiumPoints.push(
-      "1er : " + props.guesses[0].senderUserName + props.guesses[0].points
+      "1er : " + props.guesses[0].senderUserName + " (" + props.guesses[0].points + ")" + "\n"
     );
 
     podiumPoints.push(
-      "2ème : " + props.guesses[1].senderUserName + props.guesses[1].points
+      "2ème : " + props.guesses[1].senderUserName + " (" + props.guesses[1].points + ")" + "\n"
     );
 
     podiumPoints.push(
-      "3ème : " + props.guesses[2].senderUserName +props.guesses[2].points
+      "3ème : " + props.guesses[2].senderUserName + " (" + props.guesses[2].points + ")" + "\n"
     );
   }
   else
@@ -60,7 +63,7 @@ const Results = (props:any) => {
       }
 
       podiumPoints.push(
-        text + element.senderUserName + " (" + element.points + " pts)"
+        text + element.senderUserName + " (" + element.points + " pts)" + "\n"
       );
     });
   }
@@ -68,6 +71,7 @@ const Results = (props:any) => {
 
   const handleClose = () => {
     setOpen(false);
+    props.resetGame();
   };
 
   return (

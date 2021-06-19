@@ -7,7 +7,7 @@ import logo from './logo.png';
 
 const Header = () => {
   return (
-    <AppBar position="static">
+    <AppBar style={{height: "64px"}} position="static">
       <Toolbar>
         <Link to="/">
           <Typography variant="h6" style={{color: "white"}}>

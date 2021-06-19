@@ -17,7 +17,7 @@ const useChat = (roomId: string, userName: string) => {
   const [newTrack, setNewTrack] = useState(false);
   const [gameIsFinished, setGameIsFinish] = useState(false);
   const [codeError, setCodeError] = useState(false);
-  const [creatorRoom] = useState(localStorage.getItem('creatorRoom') === "true" ? true : false);
+  const [creatorRoom] = useState(localStorage.getItem('creatorRoom')?.includes("true") ? true : false);
   const socketRef = useRef({} as SocketIOClient.Socket);
 
   useEffect(() => {
@@ -33,10 +33,7 @@ const useChat = (roomId: string, userName: string) => {
 
     socketRef.current.on(END_GAME, () =>
     {
-      setTimeout(() =>
-      {
-        setGameIsFinish(true);
-      }, 3000);
+      setGameIsFinish(true);
     });
 
     socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message: any) => {
@@ -130,7 +127,7 @@ const useChat = (roomId: string, userName: string) => {
 		return comparison;
   }
 
-  return { users, gameIsFinished, messages, guesses, track, newTrack, codeError, sendMessage, sendGuess, launchParty };
+  return { users, gameIsFinished, messages, guesses, track, newTrack, codeError, setGameIsFinish, sendMessage, sendGuess, launchParty };
 };
 
 export default useChat;
