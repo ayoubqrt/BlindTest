@@ -7,7 +7,7 @@ const END_GAME = "endGame";
 const CODE_DONT_EXIST = "codeDontExist";
 const GOOD_GUESS = "goodGuess";
 const NEW_TRACK = "newTrack";
-const SOCKET_SERVER_URL = "https://berriblindback.herokuapp.com/";
+const SOCKET_SERVER_URL = "127.0.0.1:4000";
 
 const useChat = (roomId: string, userName: string) => {
   const [messages, setMessages] = useState<any[]>([]);
