@@ -45,7 +45,7 @@ const ChatRoom = (props: any) => {
             style={{width: "100%", color: "#CCC", fontWeight: "bold"}}
             value={newMessage}
             onChange={handleNewMessageChange}
-            placeholder="Ecrit pas, personne t'écoute"
+            placeholder="Écrit ici"
           />
         </form>
       </div>
